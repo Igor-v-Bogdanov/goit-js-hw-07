@@ -7,7 +7,6 @@ cardsContainer.insertAdjacentHTML("beforeend", cardsMarkup);
 
 cardsContainer.addEventListener("click", onCardsContainerClick);
 
-
 function createPhotoGalleryMarkup(galleryItems) {
   return galleryItems
     .map(({ preview, original, description }) => {
@@ -28,12 +27,16 @@ function createPhotoGalleryMarkup(galleryItems) {
 
 function onCardsContainerClick(evt) {
   evt.preventDefault();
-  const linkOnPhoto = evt.target.dataset.source;
+  if (evt.target.nodeName !== "IMG") {
+    return;
+  } else {
+    const linkOnPhoto = evt.target.dataset.source;
 
-  const instance = basicLightbox.create(`
+    const instance = basicLightbox.create(`
       <img src="${linkOnPhoto}" width="1280" height="720">
   `);
-  instance.show();
+    instance.show();
+  }
 }
 
 console.log(galleryItems);
